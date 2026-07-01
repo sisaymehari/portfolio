@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sisay Mehari — Frontend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #1D6A48;
+    --green-light: #e8f4ef;
+    --green-mid: #2d8a60;
+    --black: #0e0e0e;
+    --off-white: #f7f6f2;
+    --muted: #6b7280;
+    --border: #e2e2dc;
+    --card: #ffffff;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--off-white);
+    color: var(--black);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 2rem;
+    background: rgba(247,246,242,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 14px; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--black); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 2rem 4rem;
+    max-width: 760px; margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--green);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px; height: 1px;
+    background: var(--green);
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 strong {
+    font-weight: 500;
+    color: var(--green);
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green); color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--green-mid); transform: translateY(-1px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border); color: var(--black);
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px; font-weight: 400;
+    transition: border-color 0.2s, transform 0.15s;
+    background: var(--card);
+  }
+  .btn-secondary:hover { border-color: var(--green); transform: translateY(-1px); }
+
+  .hero-stack {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+  }
+  .stack-tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+
+  /* SECTION SHARED */
+  section { padding: 5rem 2rem; }
+  .section-inner { max-width: 760px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--green);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--green);
+  }
+
+  /* PROJECTS */
+  #projects { background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .project-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    background: var(--off-white);
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card:hover { border-color: var(--green); transform: translateY(-2px); }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--green);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 1rem; margin-bottom: 1rem;
+  }
+  .project-name {
+    font-size: 1.2rem; font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .project-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: var(--green-light);
+    color: var(--green);
+    padding: 3px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .project-desc {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.65;
+  }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+  .project-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+  .project-links { display: flex; gap: 1rem; }
+  .project-link {
+    font-size: 13px; font-weight: 500;
+    color: var(--green);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 5px;
+    transition: gap 0.2s;
+  }
+  .project-link:hover { gap: 8px; }
+  .project-link.secondary { color: var(--muted); }
+  .project-link.secondary:hover { color: var(--black); }
+
+  /* ABOUT */
+  #about { background: var(--off-white); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .about-text p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+  }
+  .about-text p strong { color: var(--black); font-weight: 500; }
+  .about-facts { display: flex; flex-direction: column; gap: 1rem; }
+  .fact {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1.4rem;
+  }
+  .fact-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .fact-value { font-size: 14px; font-weight: 500; color: var(--black); }
+
+  /* CONTACT */
+  #contact { background: var(--black); color: var(--off-white); }
+  #contact .section-label { color: var(--green-mid); }
+  #contact .section-label::before { background: var(--green-mid); }
+  .contact-heading {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .contact-heading strong { color: var(--green-mid); font-weight: 500; }
+  .contact-sub {
+    font-size: 15px;
+    color: #9ca3af;
+    margin-bottom: 2.5rem;
+    max-width: 440px;
+    line-height: 1.7;
+  }
+  .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0.75rem 1.4rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px; font-weight: 400;
+    transition: all 0.2s;
+  }
+  .contact-link.primary {
+    background: var(--green); color: #fff;
+  }
+  .contact-link.primary:hover { background: var(--green-mid); }
+  .contact-link.ghost {
+    border: 1px solid #374151; color: #9ca3af;
+  }
+  .contact-link.ghost:hover { border-color: #6b7280; color: var(--off-white); }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid #1f2937;
+    padding: 1.5rem 2rem;
+    text-align: center;
+  }
+  footer p {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #4b5563;
+  }
+
+  /* FADE IN */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { display: none; }
+    .hero { padding: 5rem 1.2rem 3rem; }
+    section { padding: 3.5rem 1.2rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .project-header { flex-direction: column; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in { opacity: 1; transform: none; transition: none; }
+    .btn-primary:hover, .btn-secondary:hover, .project-card:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">sisay.dev</a>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Frontend Developer · London</div>
+  <h1>I build things<br>that <strong>actually work.</strong></h1>
+  <p class="hero-sub">
+    I'm Sisay Mehari. I build web apps that solve real problems for real people —
+    from AI-powered platforms to mobile apps. My work is live, not just on slides.
+  </p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn-primary">See my work →</a>
+    <a href="#contact" class="btn-secondary">Get in touch</a>
+  </div>
+  <div class="hero-stack">
+    <span class="stack-tag">TypeScript</span>
+    <span class="stack-tag">Next.js</span>
+    <span class="stack-tag">React</span>
+    <span class="stack-tag">React Native</span>
+    <span class="stack-tag">Python</span>
+    <span class="stack-tag">Supabase</span>
+    <span class="stack-tag">HTML</span>
+    <span class="stack-tag">CSS</span>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label">Projects</div>
+
+    <div class="project-card fade-in">
+      <div class="project-header">
+        <div class="project-name">NatureTrace</div>
+        <span class="project-badge">Live</span>
+      </div>
+      <p class="project-desc">
+        An AI-powered biodiversity reporting platform for the UK. Citizens report wildlife sightings
+        and environmental threats — the AI identifies species, maps reports in real time, and sends
+        alerts directly to local authorities. Built from scratch and deployed live.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">TypeScript</span>
+        <span class="project-tag">Next.js</span>
+        <span class="project-tag">Supabase</span>
+        <span class="project-tag">Claude AI</span>
+        <span class="project-tag">Maps</span>
+        <span class="project-tag">PostgreSQL</span>
+      </div>
+      <div class="project-links">
+        <a href="https://naturetrace.netlify.app" target="_blank" class="project-link">View live app →</a>
+        <a href="https://github.com/sisaymehari/NatureTrace" target="_blank" class="project-link secondary">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-header">
+        <div class="project-name">NatureTrace Mobile</div>
+        <span class="project-badge">Live</span>
+      </div>
+      <p class="project-desc">
+        The companion mobile app for NatureTrace. Report wildlife sightings and environmental
+        threats directly from your phone, with AI species identification and real-time map updates.
+        Built with React Native and Expo for both iOS and Android.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">React Native</span>
+        <span class="project-tag">Expo</span>
+        <span class="project-tag">TypeScript</span>
+        <span class="project-tag">Mobile</span>
+        <span class="project-tag">AI</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/sisaymehari/NatureTrace-mobile" target="_blank" class="project-link secondary">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-header">
+        <div class="project-name">Community Needs Board</div>
+        <span class="project-badge">Live</span>
+      </div>
+      <p class="project-desc">
+        An open-source platform where local charities post what they need — volunteers, food,
+        clothing, equipment, or skills — and community members can offer to help. Built as the
+        foundation of a larger Community OS vision for the charity sector.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">TypeScript</span>
+        <span class="project-tag">Next.js</span>
+        <span class="project-tag">Supabase</span>
+        <span class="project-tag">PostgreSQL</span>
+        <span class="project-tag">Open Source</span>
+      </div>
+      <div class="project-links">
+        <a href="https://community-needs-board.netlify.app" target="_blank" class="project-link">View live app →</a>
+        <a href="https://github.com/sisaymehari/community-needs-board" target="_blank" class="project-link secondary">GitHub →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-label">About</div>
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <p>
+          I'm a frontend developer based in <strong>London</strong>. I taught myself to code
+          and built real, deployed products — not just tutorials and toy projects.
+        </p>
+        <p>
+          My biggest project is <strong>NatureTrace</strong> — a full-stack AI platform
+          I built from scratch that's live on the web and as a mobile app. It won
+          <strong>1st place at the Tech4Positive Futures: Youth Voices competition</strong>
+          at Google London in 2026.
+        </p>
+        <p>
+          I'm available for <strong>freelance projects</strong> — particularly for charities,
+          NGOs, and small organisations that need a developer who cares about impact,
+          not just code.
+        </p>
+      </div>
+      <div class="about-facts fade-in">
+        <div class="fact">
+          <div class="fact-label">Based in</div>
+          <div class="fact-value">London, United Kingdom</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Focus</div>
+          <div class="fact-value">Frontend · Full stack · Mobile</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Available for</div>
+          <div class="fact-value">Freelance & collaboration</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">GitHub</div>
+          <div class="fact-value">
+            <a href="https://github.com/sisaymehari" target="_blank"
+               style="color: var(--green); text-decoration: none;">github.com/sisaymehari</a>
+          </div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">LinkedIn</div>
+          <div class="fact-value">
+            <a href="https://linkedin.com/in/sisay-mehari" target="_blank"
+               style="color: var(--green); text-decoration: none;">linkedin.com/in/sisay-mehari</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label">Contact</div>
+    <h2 class="contact-heading">Have a project?<br><strong>Let's talk.</strong></h2>
+    <p class="contact-sub">
+      I'm open to freelance work, collaborations, and conversations.
+      If you have something you want to build, reach out.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:meharisisay6@gmail.com" class="contact-link primary">
+        meharisisay6@gmail.com →
+      </a>
+      <a href="https://github.com/sisaymehari" target="_blank" class="contact-link ghost">
+        GitHub
+      </a>
+      <a href="https://linkedin.com/in/sisay-mehari" target="_blank" class="contact-link ghost">
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built by Sisay Mehari · London · 2026</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
